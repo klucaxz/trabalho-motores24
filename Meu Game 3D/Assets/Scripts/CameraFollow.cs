@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // A esfera que a câmera deve seguir
-    public Vector3 offset;   // Offset da posição da câmera em relação à esfera
-    public float smoothSpeed = 0.125f; // Velocidade de suavização do movimento da câmera
+    private Transform alvo;
 
-    void LateUpdate()
+    public Vector3 offset;
+    // Start is called before the first frame update
+    void Start()
     {
-        // Calcula a nova posição da câmera com base na posição da esfera e o offset
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        
-        // Atualiza a posição da câmera
-        transform.position = smoothedPosition;
+        alvo = GameObject.FindWithTag("Player").transform;
+        offset = alvo.position - transform.position;
+    }
 
-        // Opcional: Faz a câmera olhar para a esfera
-        transform.LookAt(target);
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = alvo.position - offset;
     }
 }

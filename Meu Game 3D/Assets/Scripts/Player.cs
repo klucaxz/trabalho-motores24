@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (rb != null)
-            
         {
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
