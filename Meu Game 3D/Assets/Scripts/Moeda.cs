@@ -26,7 +26,7 @@ public class Moeda : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void Update ()
     {
         transform.Rotate(Vector3.up * velocidadeGiro * Time.deltaTime, Space.World);
     }
