@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,11 +7,13 @@ public class Player : MonoBehaviour
     public int velocidade = 10;
     public int forcaPulo = 7;
     private Rigidbody rb;
+    private AudioSource source;
 
     void Start()
     {
         // Inicializa o componente Rigidbody
         TryGetComponent(out rb);
+        TryGetComponent(out source);
     }
 
     void Update()
@@ -25,6 +28,9 @@ public class Player : MonoBehaviour
             // Adiciona força para pular
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                
+                source.Play();
+                
                 rb.AddForce(Vector3.up * forcaPulo, ForceMode.Impulse);
             }
         }
