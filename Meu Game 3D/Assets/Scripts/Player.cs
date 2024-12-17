@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,8 @@ public class Player : MonoBehaviour
 {
     public int velocidade = 10;
     public int forcaPulo = 7;
+    public bool noChao;
+    
     private Rigidbody rb;
     private AudioSource source;
 
@@ -15,6 +18,15 @@ public class Player : MonoBehaviour
         TryGetComponent(out rb);
         TryGetComponent(out source);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!noChao && collision.gameObject.tag == "Chão")
+        {
+            noChao = true; 
+        }
+    }
+
 
     void Update()
     {
@@ -26,12 +38,13 @@ public class Player : MonoBehaviour
             rb.AddForce(direcao * velocidade * Time.deltaTime, ForceMode.Impulse);
 
             // Adiciona força para pular
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && noChao)
             {
                 
                 source.Play();
                 
                 rb.AddForce(Vector3.up * forcaPulo, ForceMode.Impulse);
+                noChao = false;
             }
         }
 
